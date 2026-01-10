@@ -18,9 +18,9 @@
 
 ---
 
-##  Canva Design Link (Mock)
+##  Figma Design Link (Mock)
 
-[Click Here](https://www.canva.com/)
+[Click Here](https://www.figma.com/design/51ACKcnDbwyGZSNRvYAZOz/Unicore?node-id=0-1&p=f)
 
 ---
 
@@ -74,28 +74,34 @@
 - Categorized issues (technical, academic, administrative)
 - FAQs for common system-related questions
 
+### 6. AI Assistance Page
+- Auto Performance Summary
+- Categorizes students as Safe, At Risk, or Critical based on academic performance
+- Personalized study recommendation
+- Course performance analytics
+
 ---
 
 ##  Milestones
 
-###   Milestone 1
+###   Milestone 1:
 - Role-based login and registration (Admin, student, faculty)
 - Role-based redirection (Student dashboard, faculty dashboard, admin panel)
 - Basic dashboards
 - User profile
 
-###   Milestone 2
+###   Milestone 2:
 - Course Management (Admin creates and manages courses and assign faculty to courses)
 - Students register for courses
 - Student can view their enrolled course list
 - Faculty can view enrolled students
 
-###   Milestone 3
+###   Milestone 3:
 - Faculty can upload marks, grades
 - Automatic GPA/CGPA calculation
 - Students can view marks, grades
 - Confact form submission
 - Admin response panel
-- Error handling and responsive layouts
+- AI assistance
 
 ---

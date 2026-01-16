@@ -1,10 +1,15 @@
-# UniCore
+# Chef's Atlas
 
-##  Project Description
+##  Project Overview
 
-**UniCore** is a centralized University Management System designed to streamline academic and administrative operations within a university. It serves as the core platform connecting students, faculty members and administrators through a unified, secure and structured web application.
+###  Objective
 
-**UniCore** simplifies course management, enrollment, grading and academic record keeping by providing role-based access and well-defined workflows. The system focuses on correctness, data integrity and scalability by mirroring real world university operations.
+**Chef's Atlas** is a community driven food recipe platform where people from around the world can share, discover, and celebrate recipes. It acts as a culinary map, an atlas, connecting cooks through categories, ratings, and meaningful feedback.
+
+###  Target Audience
+- Beginner cooks seeking reliable recipes and feedback
+- Home cooks who want to share and discover new recipes
+- Food enthusiasts exploring different cuisines
 
 ---
 
@@ -20,17 +25,7 @@
 
 ##  Figma Design Link (Mock)
 
-[Click Here](https://www.figma.com/design/51ACKcnDbwyGZSNRvYAZOz/Unicore?node-id=0-1&p=f)
-
----
-
-##  Core Features
-
-- Role-based authentication (Admin, Faculty, Student)
-- Department, course and grade management
-- Semester-wise course offerings
-- Student enrollment with validation
-- Secure, normalized academic data storage
+[Click Here](https://www.figma.com/design/yTorhPcQAOxVbOsoi4qlLu/Chef-s-Atlas?node-id=0-1&t=8cJab2f84J7WQoPB-1)
 
 ---
 
@@ -47,61 +42,42 @@
 
 ##  Features
 
-### 1. Login / Registration Page
-- Secure token-based authentication for Admin, Faculty, and Students
-- Role-based login with automatic dashboard redirection
-- Forgot password support
+###  Core Features
 
-### 2. Admin Dashboard
-- Manage departments and academic structure
-- Create semesters and activate academic sessions
-- Assign faculty to courses
-- Update students' grades and semesters
+- User authentication (JWT based) and profile management
+- Recipe upload
+- Search and filter recipes by category
+- Rating and feedback system
+- Point based reputation and leaderboard system
+- Admin moderation and spam control
 
-### 3. Student Dashboard
-- View available courses
-- Enroll in courses
-- View grades, CGPA and academic progress
+###  CRUD Operations
 
-### 4. Faculty Dashboard
-- View assigned courses
-- Access enrolled students
-- Submit grades and evaluations
-
-### 5. Contact & Support Page
-- Students and faculty can submit contact form with name, message, and email
-- Admin receives submissions via email or admin panel
-- Categorized issues (technical, academic, administrative)
-- FAQs for common system-related questions
-
-### 6. AI Assistance Page
-- Auto Performance Summary
-- Categorizes students as Safe, At Risk, or Critical based on academic performance
-- Personalized study recommendation
-- Course performance analytics
+- Create: Users can upload recipes with title, description and category
+- Read: Users can view all recipes, recipe details, ratings, and reviews
+- Update: Users can edit their own uploaded recipes
+- Delete: Users can delete their own recipes, admins can delete any recipe
 
 ---
 
 ##  Milestones
 
 ###   Milestone 1:
-- Role-based login and registration (Admin, student, faculty)
-- Role-based redirection (Student dashboard, faculty dashboard, admin panel)
+- Sign up and sign in
 - Basic dashboards
 - User profile
+- Recipe upload
 
 ###   Milestone 2:
-- Course Management (Admin creates and manages courses and assign faculty to courses)
-- Students register for courses
-- Student can view their enrolled course list
-- Faculty can view enrolled students
+- Recipe searching
+- Category based filtering
+- Rating and feedback system
+- Points and leaderboard implementation
 
 ###   Milestone 3:
-- Faculty can upload marks, grades
-- Automatic GPA/CGPA calculation
-- Students can view marks, grades
+- Admin dashboard
+- Admin moderation
 - Confact form submission
 - Admin response panel
-- AI assistance
 
 ---

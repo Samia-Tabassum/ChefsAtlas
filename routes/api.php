@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RecipeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -14,3 +15,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('recipes/{id}', [RecipeController::class, 'patch']);
     Route::delete('recipes/{id}', [RecipeController::class, 'destroy']);
 });
+
+// Auth
+Route::post('/register', [AuthController::class, 'register']);

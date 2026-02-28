@@ -1,0 +1,18 @@
+:root {
+  --cream: #fdf6ec;
+  --brown: #4a2c17;
+  --amber: #c9742b;
+  --amber-light: #e8935c;
+  --muted: #8a7060;
+  --border: rgba(74, 44, 23, 0.12);
+  --white: #ffffff;
+}
+
+.ud-page {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--cream);
+  padding-top: 72px;
+  font-family: system-ui, sans-serif;
+  overflow-x: hidden;
+}

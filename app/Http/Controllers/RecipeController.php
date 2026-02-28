@@ -63,4 +63,40 @@ class RecipeController extends Controller
         ], 201);
     }
 
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
+    {
+        return response()->json([
+            'message' => 'Recipe updated successfully',
+            'data' => [
+                'id' => $id,
+                'title' => $request->input('title', 'Updated Recipe'),
+                'description' => $request->input('description', 'Updated description'),
+                'ingredients' => $request->input('ingredients', 'Updated ingredients'),
+                'instructions' => $request->input('instructions', 'Updated instructions'),
+                'updated_at' => now(),
+            ]
+        ]);
+    }
+
+    /**
+     * Partially update the specified resource in storage.
+     */
+    public function patch(Request $request, $id)
+    {
+        return response()->json([
+            'message' => 'Recipe partially updated successfully',
+            'data' => [
+                'id' => $id,
+                'title' => $request->input('title', 'Partially Updated Recipe'),
+                'description' => $request->input('description', 'Partially updated description'),
+                'ingredients' => $request->input('ingredients', 'Partially updated ingredients'),
+                'instructions' => $request->input('instructions', 'Partially updated instructions'),
+                'updated_at' => now(),
+            ]
+        ]);
+    }
+
 }

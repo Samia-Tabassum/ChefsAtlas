@@ -27,7 +27,7 @@ export default function Navbar() {
         <div className="nav-inner">
 
           <a href="/" className="logo" onClick={() => setActive("/")}>
-            <img src={logo} alt="Chef's Atlas Logo" style={{ height: "52px", width: "auto" }} />
+            <img src={logo} alt="Chef's Atlas Logo" style={{ height: "102px", width: "auto" }} />
             <div className="logo-text">
               <span className="logo-title">Chef's Atlas</span>
               <span className="logo-sub">World Kitchen</span>

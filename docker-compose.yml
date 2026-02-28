@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+
+  db:
+    image: mysql:8.0
+    container_name: chefsatlas_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: chefsatlas
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: chefsatlas_user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database/migrations:/docker-entrypoint-initdb.d
+
+
+volumes:
+  db_data:
+    driver: local

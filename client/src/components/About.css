@@ -35,3 +35,123 @@
   margin: 0 0 24px;
   line-height: 1.2;
 }
+
+/* HERO */
+.ab-hero {
+  position: relative;
+  width: 100%;
+  min-height: 560px;
+  display: flex;
+  align-items: center;
+  padding: 80px 60px;
+  gap: 60px;
+  background: linear-gradient(135deg, #fdf6ec 60%, #fce8d0 100%);
+  overflow: hidden;
+}
+
+.ab-hero-glow {
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,116,43,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.ab-hero-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  animation: ab-fadein 0.6s ease both;
+}
+
+.ab-hero-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 16px;
+}
+
+.ab-hero-title {
+  font-family: Georgia, serif;
+  font-size: 54px;
+  font-weight: 700;
+  color: var(--brown);
+  margin: 0 0 20px;
+  line-height: 1.15;
+}
+
+.ab-hero-accent {
+  color: var(--amber);
+}
+
+.ab-hero-desc {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 480px;
+  margin: 0 0 32px;
+}
+
+.ab-hero-btn {
+  background: var(--amber);
+  color: white;
+  padding: 14px 32px;
+  border-radius: 32px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(201,116,43,0.35);
+  transition: all 0.2s;
+}
+
+.ab-hero-btn:hover {
+  background: #b8621f;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(201,116,43,0.40);
+}
+
+.ab-hero-img-wrap {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  animation: ab-fadein 0.6s 0.15s ease both;
+}
+
+.ab-hero-img-frame {
+  position: relative;
+  width: 420px;
+  height: 380px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(74,44,23,0.18);
+}
+
+.ab-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ab-hero-img-badge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(253,246,236,0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brown);
+  box-shadow: 0 4px 16px rgba(74,44,23,0.12);
+}

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Services\RecipeService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class RecipeController extends Controller
 {
@@ -27,17 +28,7 @@ class RecipeController extends Controller
      */
     public function show($id)
     {
-        return response()->json([
-            'data' => [
-                'id' => $id,
-                'title' => 'Recipe ' . $id,
-                'description' => 'Description for recipe ' . $id,
-                'ingredients' => 'Ingredient list here',
-                'instructions' => 'Cooking instructions here',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        ]);
+        return $this->recipeService->getRecipeById($id);
     }
 
     /**
@@ -45,22 +36,31 @@ class RecipeController extends Controller
      */
     public function store(Request $request)
     {
-        $body = $request->json();
+        $user = $request->user();
 
-        logger()->info('POST /recipes - Request body:', ['body' => $body]);
-        logger()->info('POST /recipes - All request data:', $request->all());
+        if (!$user) {
+            return response()->json([
+                'message' => 'Unauthorized'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'descriptions' => 'required|string',
+            'ingredients' => 'required|string',
+            'instructions' => 'required|string',
+            'categories' => 'array',
+            'categories.*' => 'exists:categories,id',
+        ]);
+
+        $validated['user_id'] = $user->id;
+
+        $recipe = $this->recipeService->createRecipe($validated);
 
         return response()->json([
             'message' => 'Recipe created successfully',
-            'data' => [
-                'id' => rand(100, 999),
-                'title' => $body->get('title'),
-                'description' => $request->input('description', 'Recipe description'),
-                'ingredients' => $request->input('ingredients', 'Ingredients list'),
-                'instructions' => $request->input('instructions', 'Cooking instructions'),
-                'created_at' => now(),
-            ]
-        ], 201);
+            'data' => $recipe
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -68,47 +68,52 @@ class RecipeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = $request->user();
+
+        $recipe = $this->recipeService->getRecipeById($id);
+
+        if (!$recipe || $recipe->user_id !== $user->id) {
+            return response()->json([
+                'message' => 'Forbidden'
+            ], Response::HTTP_FORBIDDEN);
+        }
+
+        $validated = $request->validate([
+            'title' => 'sometimes|string|max:255',
+            'descriptions' => 'sometimes|string',
+            'ingredients' => 'sometimes|string',
+            'instructions' => 'sometimes|string',
+            'categories' => 'sometimes|array',
+            'categories.*' => 'exists:categories,id',
+        ]);
+
+        $updatedRecipe = $this->recipeService->updateRecipe($id, $validated);
+
         return response()->json([
             'message' => 'Recipe updated successfully',
-            'data' => [
-                'id' => $id,
-                'title' => $request->input('title', 'Updated Recipe'),
-                'description' => $request->input('description', 'Updated description'),
-                'ingredients' => $request->input('ingredients', 'Updated ingredients'),
-                'instructions' => $request->input('instructions', 'Updated instructions'),
-                'updated_at' => now(),
-            ]
-        ]);
-    }
-
-    /**
-     * Partially update the specified resource in storage.
-     */
-    public function patch(Request $request, $id)
-    {
-        return response()->json([
-            'message' => 'Recipe partially updated successfully',
-            'data' => [
-                'id' => $id,
-                'title' => $request->input('title', 'Partially Updated Recipe'),
-                'description' => $request->input('description', 'Partially updated description'),
-                'ingredients' => $request->input('ingredients', 'Partially updated ingredients'),
-                'instructions' => $request->input('instructions', 'Partially updated instructions'),
-                'updated_at' => now(),
-            ]
+            'data' => $updatedRecipe
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        $user = $request->user();
+
+        $recipe = $this->recipeService->getRecipeById($id);
+
+        if (!$recipe || $recipe->user_id !== $user->id) {
+            return response()->json([
+                'message' => 'Forbidden'
+            ], Response::HTTP_FORBIDDEN);
+        }
+
+        $this->recipeService->deleteRecipe($id);
+
         return response()->json([
-            'message' => 'Recipe deleted successfully',
-            'data' => [
-                'id' => $id,
-            ]
+            'message' => 'Recipe deleted successfully'
         ]);
     }
 

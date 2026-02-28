@@ -106,3 +106,65 @@
   font-weight: 600;
 }
 
+.ud-body {
+  width: 100%;
+  padding: 36px 60px 60px;
+}
+
+.ud-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.ud-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ud-tab:hover {
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+.ud-tab.active {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: white;
+  box-shadow: 0 4px 16px rgba(201,116,43,0.30);
+}
+
+.ud-tab-pill {
+  background: rgba(255,255,255,0.25);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+.ud-tab:not(.active) .ud-tab-pill {
+  background: rgba(201,116,43,0.12);
+  color: var(--amber);
+}
+
+.ud-panel {
+  width: 100%;
+  animation: ud-fadein 0.25s ease;
+}
+
+@keyframes ud-fadein {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+

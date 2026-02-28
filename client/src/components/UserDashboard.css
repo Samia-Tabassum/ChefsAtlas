@@ -167,4 +167,108 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+.ud-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  width: 100%;
+}
+
+.ud-info-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  box-shadow: 0 2px 12px rgba(74,44,23,0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.ud-info-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(74,44,23,0.10);
+}
+
+.ud-info-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(201,116,43,0.12), rgba(232,147,92,0.12));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.ud-info-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ud-info-lbl {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 500;
+}
+
+.ud-info-val {
+  font-family: Georgia, serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--brown);
+}
+
+.ud-empty-state {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 32px;
+  gap: 16px;
+}
+
+.ud-empty-icon {
+  font-size: 56px;
+}
+
+.ud-empty-state p {
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.ud-upload-btn {
+  background: var(--amber);
+  color: white;
+  padding: 12px 28px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s;
+  margin-top: 4px;
+}
+
+.ud-upload-btn:hover { background: #b8621f; }
+
+@media (max-width: 900px) {
+  .ud-info-grid { grid-template-columns: repeat(2, 1fr); }
+  .ud-hero { padding: 40px 32px 32px; }
+  .ud-body { padding: 28px 32px 48px; }
+}
+
+@media (max-width: 640px) {
+  .ud-hero-content { flex-direction: column; text-align: center; }
+  .ud-badges { justify-content: center; }
+  .ud-info-grid { grid-template-columns: 1fr; }
+  .ud-hero { padding: 32px 20px 28px; }
+  .ud-body { padding: 24px 20px 40px; }
+}
+
 

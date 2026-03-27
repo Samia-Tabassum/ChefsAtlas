@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
+import "./Login.css";
 
 
 export default function Login({ onClose, onLoginSuccess }) {
   const [loginForm, setLoginForm] = useState({ email: "", password: "" });
   const [loginError, setLoginError] = useState("");
-}
-export default function Login({ onClose }) {
+
   return (
     <div className="modal-overlay">
       <div className="modal-card">

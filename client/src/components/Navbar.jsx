@@ -11,11 +11,17 @@ const NAV_LINKS = [
   { label: "Contact", href: "/contact" },
 ];
 
-export default function Navbar({ isLoggedIn, onLoginSuccess, onLogout }) {
+export default function Navbar({
+  isLoggedIn,
+  onLoginSuccess,
+  onLogout,
+  showLogin,
+  setShowLogin,
+  onSwitchToSignup,
+}) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [showLogin, setShowLogin] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -200,6 +206,7 @@ export default function Navbar({ isLoggedIn, onLoginSuccess, onLogout }) {
         <Login
           onClose={() => setShowLogin(false)}
           onLoginSuccess={() => { onLoginSuccess(); setShowLogin(false); }}
+          onSwitchToSignup={() => { setShowLogin(false); onSwitchToSignup(); }}
         />
       )}
     </>

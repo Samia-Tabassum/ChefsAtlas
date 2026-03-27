@@ -5,9 +5,12 @@ import Navbar from './components/Navbar'
 import UserDashboard from './components/UserDashboard'
 import About from './components/About'
 import Recipes from './pages/Recipes'
+import Signup from './components/Signup'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [showLogin, setShowLogin] = useState(false)
+  const [showSignup, setShowSignup] = useState(false)
 
   return (
     <BrowserRouter>
@@ -15,10 +18,48 @@ function App() {
         isLoggedIn={isLoggedIn}
         onLoginSuccess={() => setIsLoggedIn(true)}
         onLogout={() => setIsLoggedIn(false)}
+        showLogin={showLogin}
+        setShowLogin={setShowLogin}
+        onSwitchToSignup={() => setShowSignup(true)}
       />
+
+      {showSignup && (
+        <Signup
+          onClose={() => setShowSignup(false)}
+          onSignupSuccess={() => {
+            setIsLoggedIn(true)
+            setShowSignup(false)
+          }}
+          onSwitchToLogin={() => {
+            setShowSignup(false)
+            setShowLogin(true)
+          }}
+        />
+      )}
+
       <Routes>
-        <Route path="/" element={<div style={{ paddingTop: '72px', minHeight: '100vh', background: '#fdf6ec' }} />} />
-        <Route path="/profile" element={isLoggedIn ? <UserDashboard /> : <div style={{ paddingTop: '72px', minHeight: '100vh', background: '#fdf6ec', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Georgia, serif', color: '#4a2c17' }}>Please log in to view your profile.</div>} />
+        <Route
+          path="/"
+          element={
+            <div style={{ paddingTop: '72px', minHeight: '100vh', background: '#fdf6ec' }} />
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            isLoggedIn
+              ? <UserDashboard />
+              : (
+                <div style={{
+                  paddingTop: '72px', minHeight: '100vh', background: '#fdf6ec',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontFamily: 'Georgia, serif', color: '#4a2c17'
+                }}>
+                  Please log in to view your profile.
+                </div>
+              )
+          }
+        />
         <Route path="/about" element={<About />} />
         <Route path="/recipes" element={<Recipes />} />
       </Routes>

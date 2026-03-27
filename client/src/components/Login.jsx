@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import "./Login.css";
+import logo from "../assets/logo.png";
 
-export default function Login({ onClose, onLoginSuccess }) {
+export default function Login({ onClose, onLoginSuccess, onSwitchToSignup }) {
   const [loginForm, setLoginForm] = useState({ email: "", password: "" });
   const [loginError, setLoginError] = useState("");
 
@@ -37,9 +38,7 @@ export default function Login({ onClose, onLoginSuccess }) {
 
         <div className="modal-header">
           <div className="modal-logo">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c9742b" strokeWidth="2">
-              <path d="M3 11l19-9-9 19-2-8-8-2z"/>
-            </svg>
+            <img src={logo} alt="Chef's Atlas" style={{ width: "100px", height: "100px", objectFit: "contain" }} />
           </div>
           <h2 className="modal-title">Welcome back</h2>
           <p className="modal-subtitle">Sign in to share recipes & explore your kitchen atlas</p>
@@ -99,7 +98,15 @@ export default function Login({ onClose, onLoginSuccess }) {
         </form>
 
         <p className="modal-signup">
-          Don't have an account? <a href="/signup" className="form-link">Create one</a>
+          Don't have an account?{" "}
+          <button
+            type="button"
+            className="form-link"
+            style={{ background: "none", border: "none", cursor: "pointer", padding: 0, font: "inherit" }}
+            onClick={() => { onClose(); onSwitchToSignup?.(); }}
+          >
+            Create one
+          </button>
         </p>
 
       </div>

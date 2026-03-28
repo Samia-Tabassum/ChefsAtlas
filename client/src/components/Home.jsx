@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
 import home from "../assets/home.jpg";
-import "./Home.css";
 
 const CATEGORIES = [
   { emoji: "🍝", name: "Italian",     count: "4,820" },
@@ -89,32 +88,40 @@ function RevealSection({ children, className }) {
   return <div ref={ref} className={`hm-reveal ${className || ""}`}>{children}</div>;
 }
 
-
-
 export default function Home() {
   return (
     <div className="hm-page">
-
-      {/* HERO */}
       <section className="hm-hero">
+        <div className="hm-hero-glow" />
+        <div className="hm-hero-glow2" />
+
         <div className="hm-hero-inner">
           <h1 className="hm-hero-title">
-            The World's Recipes,<br />
+            The World's Recipes,
+            <br />
             <em>One Atlas.</em>
           </h1>
 
           <p className="hm-hero-desc">
-            Discover and share recipes from around the world.
+            Discover, share, and celebrate food from every corner of the earth.
+            Chef's Atlas connects cooks through flavors, stories, and the
+            universal language of good food.
           </p>
 
-          <Link to="/recipes" className="hm-btn-primary">
-            Explore Recipes
-          </Link>
+          <div className="hm-hero-actions">
+            <Link to="/recipes" className="hm-btn-primary">Explore Recipes</Link>
+          </div>
+        </div>
+
+        <div className="hm-hero-visual">
+          <div className="hm-hero-frame">
+             <img src={home} alt="Chef's Atlas home" />
+            
+          </div>
         </div>
       </section>
 
-      {/* CATEGORIES */}
-          <section className="hm-categories">
+      <section className="hm-categories">
         <div className="hm-cat-header">
           <div className="hm-cat-header-left">
             <span className="hm-eyebrow">Browse by Cuisine</span>
@@ -136,16 +143,82 @@ export default function Home() {
         </RevealSection>
       </section>
 
-      {/* RECIPES */}
       <section className="hm-recipes">
-        <h2>Recipes</h2>
+        <div className="hm-recipes-header">
+          <div>
+            <span className="hm-eyebrow">This Week's Favourites</span>
+            <h2 className="hm-section-title">Trending Recipes Across the Globe</h2>
+          </div>
+          <Link to="/recipes" className="hm-btn-ghost">Browse all -&gt;</Link>
+        </div>
+
+        <RevealSection>
+          <div className="hm-recipes-grid">
+            {RECIPES.map((r, i) => (
+              <Link
+                key={i}
+                to="/recipes"
+                className={`hm-recipe-card${r.featured ? " featured" : ""}`}
+              >
+                <div className="hm-rc-img">
+                  <img src={r.img} alt={r.title} />
+                </div>
+                <div className="hm-rc-body">
+                  <div className="hm-rc-meta">
+                    <span className="hm-rc-cuisine">{r.cuisine}</span>
+                  </div>
+                  <div className="hm-rc-title">{r.title}</div>
+                  <div className="hm-rc-desc">{r.desc}</div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </RevealSection>
       </section>
 
-      {/* HOW */}
       <section className="hm-how">
-        <h2>How it works</h2>
+        <span className="hm-eyebrow">The Process</span>
+        <h2 className="hm-section-title">Your Culinary Journey Starts Here</h2>
+        <p className="hm-section-desc">
+          From your first recipe to becoming a community favourite, Chef's Atlas
+          guides you every step of the way.
+        </p>
+
+        <RevealSection>
+          <div className="hm-how-grid">
+            {HOW_IT_WORKS.map((s) => (
+              <div className="hm-how-card" key={s.num}>
+                <div className="hm-how-num">{s.num}</div>
+                <div className="hm-how-icon">{s.icon}</div>
+                <h3 className="hm-how-title">{s.title}</h3>
+                <p className="hm-how-desc">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </RevealSection>
       </section>
 
+      <section className="hm-cta">
+        <div className="hm-cta-inner">
+          <img
+            src="https://images.unsplash.com/photo-1543353071-873f17a7a088?w=1400&q=80"
+            alt="Community cooking"
+            className="hm-cta-bg"
+          />
+          <div className="hm-cta-overlay" />
+          <div className="hm-cta-content">
+            <h2 className="hm-cta-title">Ready to Start Cooking?</h2>
+            <p className="hm-cta-desc">
+              Join 310,000 cooks across the globe. Share your first recipe
+              with the world today.
+            </p>
+            <div className="hm-cta-btns">
+              <Link to="/recipes/new" className="hm-cta-btn-primary">Share a Recipe</Link>
+              <Link to="/recipes" className="hm-cta-btn-secondary">Browse Recipes</Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

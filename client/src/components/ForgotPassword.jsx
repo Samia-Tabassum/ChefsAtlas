@@ -1,7 +1,10 @@
 import { useState } from "react";
+import "./ForgotPassword.css";
 
 export default function ForgotPassword({ onClose }) {
   return (
+     <div className="fp-overlay" onClick={onClose}>
+    <div className="fp-card" onClick={(e) => e.stopPropagation()}></div>
     <div>
       <div>
         <button onClick={onClose}>X</button>
@@ -14,6 +17,7 @@ export default function ForgotPassword({ onClose }) {
           <button type="submit">Send Reset Link</button>
         </form>
       </div>
+    </div>
     </div>
   );
 }

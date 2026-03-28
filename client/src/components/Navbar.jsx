@@ -1,6 +1,7 @@
 import logo from "../assets/logo.png";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import "./Navbar.css";
 
 const NAV_LINKS = [
@@ -11,6 +12,7 @@ const NAV_LINKS = [
 ];
 
 export default function Navbar() {
+  const { user, isAuthenticated, signOut } = useAuth();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -25,6 +27,8 @@ export default function Navbar() {
   useEffect(() => {
     setMenuOpen(false);
   }, [location.pathname]);
+
+  const userInitial = user?.name?.trim()?.charAt(0)?.toUpperCase() || "A";
 
   return (
     <>
@@ -69,10 +73,26 @@ export default function Navbar() {
           <div className="nav-right">
             <div className="nav-divider" />
 
-            <Link to="/profile" className="profile-btn">
-              <div className="profile-avatar">A</div>
-              <span className="profile-label">User Profile</span>
-            </Link>
+            {isAuthenticated ? (
+              <>
+                <Link to="/profile" className="profile-btn">
+                  <div className="profile-avatar">{userInitial}</div>
+                  <span className="profile-label">{user?.name || "User Profile"}</span>
+                </Link>
+
+                <button type="button" className="ghost-btn" onClick={signOut}>
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="ghost-btn link-btn">Login</Link>
+                <Link to="/signup" className="profile-btn">
+                  <div className="profile-avatar">+</div>
+                  <span className="profile-label">Sign Up</span>
+                </Link>
+              </>
+            )}
 
             <Link to="/recipes/new" className="cta-btn">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -120,7 +140,7 @@ export default function Navbar() {
         </ul>
 
         <div className="mobile-footer">
-          <Link to="/profile" className="mobile-profile">
+          <Link to={isAuthenticated ? "/profile" : "/login"} className="mobile-profile">
             <div
               className="profile-avatar"
               style={{
@@ -137,11 +157,11 @@ export default function Navbar() {
                 flexShrink: 0
               }}
             >
-              A
+              {isAuthenticated ? userInitial : "+"}
             </div>
             <div className="mobile-profile-info">
-              <span className="mobile-profile-name">User Profile</span>
-              <span className="mobile-profile-role">View Profile</span>
+              <span className="mobile-profile-name">{isAuthenticated ? (user?.name || "User Profile") : "Login"}</span>
+              <span className="mobile-profile-role">{isAuthenticated ? "View Profile" : "Sign in or create account"}</span>
             </div>
           </Link>
 

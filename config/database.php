@@ -38,7 +38,15 @@ return [
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DATABASE_URL'),
-            'database' => env('DB_DATABASE', database_path('database.sqlite')),
+            'database' => (static function () {
+                $database = env('DB_DATABASE', 'database.sqlite');
+
+                if ($database === ':memory:' || preg_match('/^[A-Za-z]:[\\\\\\/]/', $database) === 1 || str_starts_with($database, DIRECTORY_SEPARATOR)) {
+                    return $database;
+                }
+
+                return database_path($database);
+            })(),
             'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
@@ -89,8 +97,10 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
-            // 'encrypt' => env('DB_ENCRYPT', 'yes'),
-            // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
+            'encrypt' => env('DB_ENCRYPT', 'yes'),
+            'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
+            'odbc' => env('DB_ODBC', false),
+            'odbc_datasource_name' => env('DB_ODBC_DATASOURCE_NAME'),
         ],
 
     ],

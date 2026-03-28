@@ -157,6 +157,31 @@
   text-decoration: none;
 }
 
+.ghost-btn {
+  background: transparent;
+  border: 1.5px solid var(--border);
+  border-radius: 24px;
+  padding: 8px 16px;
+  color: var(--brown);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ghost-btn:hover {
+  border-color: var(--amber);
+  background: rgba(201,116,43,0.08);
+  color: var(--amber);
+}
+
+.link-btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .profile-btn:hover {
   border-color: var(--amber);
   background: rgba(201,116,43,0.05);
@@ -368,5 +393,4 @@
 @media (max-width: 480px) {
   .nav-inner { padding: 0 20px; }
 }
-
 

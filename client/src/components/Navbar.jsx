@@ -1,6 +1,7 @@
 import logo from "../assets/logo.png";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import Login from "./Login";
 import "./Navbar.css";
 
 const NAV_LINKS = [
@@ -14,6 +15,8 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -25,6 +28,11 @@ export default function Navbar() {
   useEffect(() => {
     setMenuOpen(false);
   }, [location.pathname]);
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setMenuOpen(false);
+  };
 
   return (
     <>
@@ -44,9 +52,7 @@ export default function Navbar() {
               <li key={link.href}>
                 <Link
                   to={link.href}
-                  className={`nav-link ${
-                    location.pathname === link.href ? "active" : ""
-                  }`}
+                  className={`nav-link ${location.pathname === link.href ? "active" : ""}`}
                 >
                   {link.label}
                 </Link>
@@ -69,17 +75,39 @@ export default function Navbar() {
           <div className="nav-right">
             <div className="nav-divider" />
 
-            <Link to="/profile" className="profile-btn">
-              <div className="profile-avatar">A</div>
-              <span className="profile-label">User Profile</span>
-            </Link>
+            {isLoggedIn ? (
+              <>
+                <Link to="/profile" className="profile-btn">
+                  <div className="profile-avatar">A</div>
+                  <span className="profile-label">User Profile</span>
+                </Link>
 
-            <Link to="/recipes/new" className="cta-btn">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M12 5v14M5 12h14"/>
-              </svg>
-              Share Recipe
-            </Link>
+                <Link to="/recipes/new" className="cta-btn">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M12 5v14M5 12h14"/>
+                  </svg>
+                  Share Recipe
+                </Link>
+
+                <button className="logout-btn" onClick={handleLogout}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <polyline points="16 17 21 12 16 7"/>
+                    <line x1="21" y1="12" x2="9" y2="12"/>
+                  </svg>
+                  Logout
+                </button>
+              </>
+            ) : (
+              <button className="login-btn" onClick={() => setShowLogin(true)}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                  <polyline points="10 17 15 12 10 7"/>
+                  <line x1="15" y1="12" x2="3" y2="12"/>
+                </svg>
+                Login
+              </button>
+            )}
 
             <button
               className={`hamburger ${menuOpen ? "open" : ""}`}
@@ -92,6 +120,7 @@ export default function Navbar() {
         </div>
       </nav>
 
+      {/* Mobile Menu */}
       <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
         <div className="mobile-search">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8a7060" strokeWidth="2.5">
@@ -106,9 +135,7 @@ export default function Navbar() {
             <li key={link.href}>
               <Link
                 to={link.href}
-                className={`mobile-nav-link ${
-                  location.pathname === link.href ? "active" : ""
-                }`}
+                className={`mobile-nav-link ${location.pathname === link.href ? "active" : ""}`}
               >
                 {link.label}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -120,39 +147,63 @@ export default function Navbar() {
         </ul>
 
         <div className="mobile-footer">
-          <Link to="/profile" className="mobile-profile">
-            <div
-              className="profile-avatar"
-              style={{
-                width: 34,
-                height: 34,
-                fontSize: 15,
-                borderRadius: "50%",
-                background: "linear-gradient(135deg, #c9742b 0%, #e8935c 100%)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "white",
-                fontWeight: 600,
-                flexShrink: 0
-              }}
-            >
-              A
-            </div>
-            <div className="mobile-profile-info">
-              <span className="mobile-profile-name">User Profile</span>
-              <span className="mobile-profile-role">View Profile</span>
-            </div>
-          </Link>
+          {isLoggedIn ? (
+            <>
+              <Link to="/profile" className="mobile-profile">
+                <div
+                  className="profile-avatar"
+                  style={{
+                    width: 34, height: 34, fontSize: 15, borderRadius: "50%",
+                    background: "linear-gradient(135deg, #c9742b 0%, #e8935c 100%)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    color: "white", fontWeight: 600, flexShrink: 0
+                  }}
+                >A</div>
+                <div className="mobile-profile-info">
+                  <span className="mobile-profile-name">User Profile</span>
+                  <span className="mobile-profile-role">View Profile</span>
+                </div>
+              </Link>
 
-          <Link to="/recipes/new" className="mobile-cta">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path d="M12 5v14M5 12h14"/>
-            </svg>
-            Share
-          </Link>
+              <Link to="/recipes/new" className="mobile-cta">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M12 5v14M5 12h14"/>
+                </svg>
+                Share
+              </Link>
+
+              <button className="mobile-logout" onClick={handleLogout}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                  <polyline points="16 17 21 12 16 7"/>
+                  <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+              </button>
+            </>
+          ) : (
+            <button
+              className="mobile-cta"
+              style={{ flex: 1, justifyContent: "center" }}
+              onClick={() => { setMenuOpen(false); setShowLogin(true); }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                <polyline points="10 17 15 12 10 7"/>
+                <line x1="15" y1="12" x2="3" y2="12"/>
+              </svg>
+              Login
+            </button>
+          )}
         </div>
       </div>
+
+      {/* Login Modal — lives in its own component */}
+      {showLogin && (
+        <Login
+          onClose={() => setShowLogin(false)}
+          onLoginSuccess={() => setIsLoggedIn(true)}
+        />
+      )}
     </>
   );
 }

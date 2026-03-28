@@ -35,7 +35,7 @@ export default function Navbar({
   }, [location.pathname]);
 
   const handleLogout = () => {
-    onLogout(); // ✅ correct
+    onLogout(); // call parent logout function
     setMenuOpen(false);
   };
 
@@ -113,15 +113,15 @@ export default function Navbar({
 
       {/* Mobile Menu (unchanged) */}
       <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
-        {/* keep your existing code */}
+        {/* same as before */}
       </div>
 
-      {/* ✅ FINAL MERGED LOGIN MODAL */}
+      {/* Login Modal */}
       {showLogin && (
         <Login
           onClose={() => setShowLogin(false)}
           onLoginSuccess={() => {
-            onLoginSuccess(); // ✅ parent handles auth
+            onLoginSuccess();
             setShowLogin(false);
           }}
           onSwitchToSignup={() => {

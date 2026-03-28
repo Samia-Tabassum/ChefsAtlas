@@ -7,11 +7,13 @@ import About from './components/About'
 import Recipes from './pages/Recipes'
 import Signup from './components/Signup'
 import Home from './components/Home'
+import ForgotPassword from './components/ForgotPassword'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [showLogin, setShowLogin] = useState(false)
   const [showSignup, setShowSignup] = useState(false)
+  const [showForgot, setShowForgot] = useState(false)
 
   return (
     <BrowserRouter>
@@ -21,7 +23,8 @@ function App() {
         onLogout={() => setIsLoggedIn(false)}
         showLogin={showLogin}
         setShowLogin={setShowLogin}
-        onSwitchToSignup={() => setShowSignup(true)}
+        onSwitchToSignup={() => { setShowLogin(false); setShowSignup(true) }}
+        onSwitchToForgot={() => { setShowLogin(false); setShowForgot(true) }}
       />
 
       {showSignup && (
@@ -33,6 +36,16 @@ function App() {
           }}
           onSwitchToLogin={() => {
             setShowSignup(false)
+            setShowLogin(true)
+          }}
+        />
+      )}
+
+      {showForgot && (
+        <ForgotPassword
+          onClose={() => setShowForgot(false)}
+          onSwitchToLogin={() => {
+            setShowForgot(false)
             setShowLogin(true)
           }}
         />

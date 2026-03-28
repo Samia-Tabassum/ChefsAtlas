@@ -35,7 +35,7 @@ export default function Navbar({
   }, [location.pathname]);
 
   const handleLogout = () => {
-    onLogout(); // parent handles logout
+    onLogout();
     setMenuOpen(false);
   };
 
@@ -160,7 +160,6 @@ export default function Navbar({
             <button
               className={`hamburger ${menuOpen ? "open" : ""}`}
               onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Menu"
             >
               <span />
               <span />

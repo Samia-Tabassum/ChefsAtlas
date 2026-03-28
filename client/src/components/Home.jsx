@@ -1,4 +1,7 @@
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import "./Home.css";
+import home from "../assets/home.jpg";
 import "./Home.css";
 
 const CATEGORIES = [
@@ -56,6 +59,36 @@ const HOW_IT_WORKS = [
   { num: "03", icon: "⭐", title: "Rate & Review",       desc: "Leave honest ratings and helpful comments. Your feedback helps every cook improve." },
   { num: "04", icon: "🌐", title: "Connect Globally",   desc: "Follow cooks worldwide, exchange culinary traditions, and build your recipe collection." },
 ];
+
+function useReveal() {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add("visible");
+          obs.unobserve(el);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  return ref;
+}
+
+function RevealSection({ children, className }) {
+  const ref = useReveal();
+  return <div ref={ref} className={`hm-reveal ${className || ""}`}>{children}</div>;
+}
+
 
 
 export default function Home() {

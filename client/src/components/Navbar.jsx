@@ -18,6 +18,7 @@ export default function Navbar({
   showLogin,
   setShowLogin,
   onSwitchToSignup,
+  onSwitchToForgot,
 }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -220,6 +221,10 @@ export default function Navbar({
           onSwitchToSignup={() => {
             setShowLogin(false);
             onSwitchToSignup();
+          }}
+          onSwitchToForgot={() => {
+            setShowLogin(false);
+            onSwitchToForgot();
           }}
         />
       )}

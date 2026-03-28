@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import "./Login.css";
 import logo from "../assets/logo.png";
 
-export default function Login({ onClose, onLoginSuccess, onSwitchToSignup }) {
+import ForgotPassword from "./ForgotPassword";
+
+export default function Login({ onClose, onLoginSuccess, onSwitchToSignup, onSwitchToForgot }) {
   const [loginForm, setLoginForm] = useState({ email: "", password: "" });
   const [loginError, setLoginError] = useState("");
 
@@ -86,7 +88,14 @@ export default function Login({ onClose, onLoginSuccess, onSwitchToSignup }) {
             <label className="form-check">
               <input type="checkbox" /> Remember me
             </label>
-            <a href="/forgot-password" className="form-link">Forgot password?</a>
+            <button
+              type="button"
+              className="form-link"
+              style={{ background: "none", border: "none", cursor: "pointer", padding: 0, font: "inherit" }}
+              onClick={() => { onClose(); onSwitchToForgot?.(); }}
+            >
+              Forgot password?
+            </button>
           </div>
 
           <button type="submit" className="modal-submit">

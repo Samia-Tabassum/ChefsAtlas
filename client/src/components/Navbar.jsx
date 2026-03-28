@@ -11,11 +11,17 @@ const NAV_LINKS = [
   { label: "Contact", href: "/contact" },
 ];
 
-export default function Navbar({ isLoggedIn, onLoginSuccess, onLogout }) {
+export default function Navbar({
+  isLoggedIn,
+  onLoginSuccess,
+  onLogout,
+  showLogin,
+  setShowLogin,
+  onSwitchToSignup,
+}) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [showLogin, setShowLogin] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -29,7 +35,7 @@ export default function Navbar({ isLoggedIn, onLoginSuccess, onLogout }) {
   }, [location.pathname]);
 
   const handleLogout = () => {
-    onLogout(); // ✅ use parent function
+    onLogout(); // call parent logout function
     setMenuOpen(false);
   };
 
@@ -82,9 +88,6 @@ export default function Navbar({ isLoggedIn, onLoginSuccess, onLogout }) {
                 </Link>
 
                 <Link to="/recipes/new" className="cta-btn">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <path d="M12 5v14M5 12h14"/>
-                  </svg>
                   Share Recipe
                 </Link>
 
@@ -108,18 +111,22 @@ export default function Navbar({ isLoggedIn, onLoginSuccess, onLogout }) {
         </div>
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu (unchanged) */}
       <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
-        {/* same as before (no change needed) */}
+        {/* same as before */}
       </div>
 
-      {/* ✅ Correct Login Modal */}
+      {/* Login Modal */}
       {showLogin && (
         <Login
           onClose={() => setShowLogin(false)}
           onLoginSuccess={() => {
-            onLoginSuccess(); // ✅ parent handles login
+            onLoginSuccess();
             setShowLogin(false);
+          }}
+          onSwitchToSignup={() => {
+            setShowLogin(false);
+            onSwitchToSignup();
           }}
         />
       )}

@@ -1,8 +1,8 @@
 -- Create database
-CREATE DATABASE cse3100;
+CREATE DATABASE cse3100_test;
 GO
 
-USE cse3100;
+USE cse3100_test;
 GO
 
 -- Create login and user

@@ -1,12 +1,12 @@
-CREATE DATABASE cse3100_testA1;
+CREATE DATABASE cse3100_test;
 
-CREATE USER 'admin' @'localhost' IDENTIFIED BY 'strong_password';
+CREATE USER 'admin' @'localhost' IDENTIFIED BY 'StrongPassword123!';
 
 GRANT ALL PRIVILEGES ON cse3100_testA1.* TO 'admin' @'localhost';
 
 FLUSH PRIVILEGES;
 
-USE cse3100_testA1;
+USE cse3100_test;
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,

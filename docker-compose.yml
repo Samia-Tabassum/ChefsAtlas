@@ -1,46 +1,51 @@
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
     container_name: chefsatlas_app
-    working_dir: /var/www/html
-    volumes:
-      - ./:/var/www/html
-    ports:
-      - "8000:8000"
+    env_file:
+      - .env
     environment:
-      APP_ENV: local
-      APP_DEBUG: "true"
-      APP_URL: http://localhost:8000
-      DB_CONNECTION: mysql
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_DATABASE: chefsatlas
-      DB_USERNAME: chefsatlas_user
-      DB_PASSWORD: password
+      DB_HOST: chefsatlas_mssql
     depends_on:
-      db:
-        condition: service_healthy
+      - mssql
+      - mailpit
+    ports:
+      - "${APP_PORT:-8000}:80"
 
-  db:
-    image: mysql:8.0
-    container_name: chefsatlas_db
+  client:
+    build:
+      context: .
+      dockerfile: docker/client/Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:8000/api}
+        VITE_GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+    container_name: chefsatlas_client
+    depends_on:
+      - app
+    ports:
+      - "${CLIENT_PORT:-5173}:80"
+
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: chefsatlas_mssql
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: chefsatlas
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_USER: chefsatlas_user
-      MYSQL_PASSWORD: password
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+      MSSQL_SA_PASSWORD: ${DB_PASSWORD:-StrongPassword123!}
     ports:
-      - "3306:3306"
+      - "${DB_PORT:-1433}:1433"
     volumes:
-      - db_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-ppassword"]
-      interval: 5s
-      timeout: 5s
-      retries: 20
+      - mssql_data:/var/opt/mssql
 
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: chefsatlas_mailpit
+    ports:
+      - "${MAIL_PORT:-1025}:1025"
+      - "${MAIL_UI_PORT:-8025}:8025"
 
 volumes:
-  db_data:
-    driver: local
+  mssql_data:

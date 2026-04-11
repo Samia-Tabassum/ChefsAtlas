@@ -28,7 +28,8 @@ export default function Navbar() {
     setMenuOpen(false);
   }, [location.pathname]);
 
-  const userInitial = user?.name?.trim()?.charAt(0)?.toUpperCase() || "A";
+  const userInitial =
+    user?.name?.trim()?.charAt(0)?.toUpperCase() || "A";
 
   async function handleLogout() {
     await signOut();
@@ -38,6 +39,8 @@ export default function Navbar() {
   return (
     <nav className={`navbar ${scrolled ? "scrolled" : "top"}`}>
       <div className="nav-inner">
+
+        {/* Logo */}
         <Link to="/" className="logo">
           <img
             src={logo}
@@ -50,12 +53,15 @@ export default function Navbar() {
           </div>
         </Link>
 
+        {/* Nav Links */}
         <ul className="nav-links">
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
               <Link
                 to={link.href}
-                className={`nav-link ${location.pathname === link.href ? "active" : ""}`}
+                className={`nav-link ${
+                  location.pathname === link.href ? "active" : ""
+                }`}
               >
                 {link.label}
               </Link>
@@ -63,6 +69,7 @@ export default function Navbar() {
           ))}
         </ul>
 
+        {/* Search */}
         <div className="nav-search">
           <svg
             width="14"
@@ -79,10 +86,11 @@ export default function Navbar() {
           <input
             placeholder="Search recipes, cuisines..."
             value={searchQuery}
-            onChange={(event) => setSearchQuery(event.target.value)}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
 
+        {/* Right Side */}
         <div className="nav-right">
           <div className="nav-divider" />
 
@@ -90,7 +98,9 @@ export default function Navbar() {
             <>
               <Link to="/profile" className="profile-btn">
                 <div className="profile-avatar">{userInitial}</div>
-                <span className="profile-label">{user?.name || "User Profile"}</span>
+                <span className="profile-label">
+                  {user?.name || "User Profile"}
+                </span>
               </Link>
 
               <Link to="/recipes/new" className="cta-btn">
@@ -107,7 +117,11 @@ export default function Navbar() {
                 Share Recipe
               </Link>
 
-              <button type="button" className="logout-btn" onClick={handleLogout}>
+              <button
+                type="button"
+                className="logout-btn"
+                onClick={handleLogout}
+              >
                 <svg
                   width="14"
                   height="14"
@@ -135,10 +149,11 @@ export default function Navbar() {
             </>
           )}
 
+          {/* Hamburger */}
           <button
             type="button"
             className={`hamburger ${menuOpen ? "open" : ""}`}
-            onClick={() => setMenuOpen((current) => !current)}
+            onClick={() => setMenuOpen((prev) => !prev)}
           >
             <span />
             <span />
@@ -147,6 +162,7 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* Mobile Menu */}
       <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
         <div className="mobile-search">
           <input placeholder="Search recipes..." />
@@ -157,7 +173,9 @@ export default function Navbar() {
             <li key={link.href}>
               <Link
                 to={link.href}
-                className={`mobile-nav-link ${location.pathname === link.href ? "active" : ""}`}
+                className={`mobile-nav-link ${
+                  location.pathname === link.href ? "active" : ""
+                }`}
               >
                 {link.label}
               </Link>
@@ -166,31 +184,23 @@ export default function Navbar() {
         </ul>
 
         <div className="mobile-footer">
-          <Link to={isAuthenticated ? "/profile" : "/login"} className="mobile-profile">
-            <div
-              className="profile-avatar"
-              style={{
-                width: 34,
-                height: 34,
-                fontSize: 15,
-                borderRadius: "50%",
-                background: "linear-gradient(135deg, #c9742b 0%, #e8935c 100%)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "white",
-                fontWeight: 600,
-                flexShrink: 0,
-              }}
-            >
+          <Link
+            to={isAuthenticated ? "/profile" : "/login"}
+            className="mobile-profile"
+          >
+            <div className="profile-avatar">
               {isAuthenticated ? userInitial : "+"}
             </div>
             <div className="mobile-profile-info">
               <span className="mobile-profile-name">
-                {isAuthenticated ? user?.name || "User Profile" : "Login"}
+                {isAuthenticated
+                  ? user?.name || "User Profile"
+                  : "Login"}
               </span>
               <span className="mobile-profile-role">
-                {isAuthenticated ? "View Profile" : "Sign in or create account"}
+                {isAuthenticated
+                  ? "View Profile"
+                  : "Sign in or create account"}
               </span>
             </div>
           </Link>
@@ -198,19 +208,13 @@ export default function Navbar() {
           {isAuthenticated ? (
             <>
               <Link to="/recipes/new" className="mobile-cta">
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                >
-                  <path d="M12 5v14M5 12h14" />
-                </svg>
                 Share
               </Link>
-              <button type="button" className="mobile-logout" onClick={handleLogout}>
+              <button
+                type="button"
+                className="mobile-logout"
+                onClick={handleLogout}
+              >
                 Logout
               </button>
             </>

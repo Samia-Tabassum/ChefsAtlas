@@ -25,5 +25,16 @@ class DatabaseSeeder extends Seeder
         ] as $categoryName) {
             Category::firstOrCreate(['name' => $categoryName]);
         }
+
+        User::firstOrCreate(
+            ['email' => env('ADMIN_EMAIL', 'admin@chefsatlas.test')],
+            [
+                'name' => 'Chef Atlas Admin',
+                'username' => 'admin',
+                'password' => Hash::make(env('ADMIN_PASSWORD', 'AdminPass123!')),
+                'email_verified_at' => now(),
+                'is_admin' => true,
+            ]
+        );
     }
 }

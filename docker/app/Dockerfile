@@ -1,6 +1,7 @@
 FROM php:8.2-apache-bookworm
 
 ENV ACCEPT_EULA=Y
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -31,10 +32,13 @@ RUN apt-get update \
 
 WORKDIR /var/www/html
 
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
+
 COPY . .
 COPY docker/app/start.sh /usr/local/bin/start-app
 
 RUN chmod +x /usr/local/bin/start-app \
+    && composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction \
     && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
 EXPOSE 80

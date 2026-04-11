@@ -74,7 +74,7 @@ export default function UserHub() {
             const tipsData = await api.getUserTips(userId);
             setTips(Array.isArray(tipsData?.data) ? tipsData.data : []);
             setTipStats(tipsData?.stats || null);
-          } catch (_tipsError) {
+          } catch {
             setTips([]);
             setTipStats(null);
             showToast("Your dashboard loaded, but tip activity could not be fetched right now.", "error");

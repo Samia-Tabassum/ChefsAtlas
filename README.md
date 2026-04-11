@@ -35,8 +35,8 @@
 |-----------|------------------------------------|
 | Frontend  | React, HTML, CSS        |
 | Backend   | Laravel (PHP)                      |
-| Database  | MySQL                              |
-| Rendering Method  | Server-Side Rendering (SSR)                              |
+| Database  | Microsoft SQL Server                              |
+| Rendering Method  | Client-Side Rendering (CSR)                              |
 
 ---
 

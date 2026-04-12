@@ -13,10 +13,13 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
-        "id",
         'name',
+        'username',
         'email',
         'password',
+        'google_id',
+        'points',
+        'is_admin',
     ];
 
     /**
@@ -29,8 +32,43 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function posts()
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+        'is_admin' => 'boolean',
+    ];
+
+    public function recipes()
     {
-        return $this->hasMany(Post::class); // One user has many posts
+        return $this->hasMany(Recipe::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function favorites()
+    {
+        return $this->belongsToMany(Recipe::class, 'favorite_recipe')
+            ->withTimestamps();
+    }
+
+    public function sentTips()
+    {
+        return $this->hasMany(Tip::class, 'sender_id');
+    }
+
+    public function receivedTips()
+    {
+        return $this->hasMany(Tip::class, 'recipient_id');
+    }
+
+    public function scopeLeaderboard($query)
+    {
+        return $query->withCount('recipes')
+            ->orderByDesc('points')
+            ->orderByDesc('recipes_count')
+            ->orderBy('name');
     }
 }

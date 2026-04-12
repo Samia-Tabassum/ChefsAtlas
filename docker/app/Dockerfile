@@ -10,6 +10,7 @@ RUN apt-get update \
         curl \
         git \
         gpg \
+        libpq-dev \
         libzip-dev \
         unixodbc-dev \
         unzip \
